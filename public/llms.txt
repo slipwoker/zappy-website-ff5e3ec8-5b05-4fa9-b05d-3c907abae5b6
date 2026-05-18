@@ -1,0 +1,82 @@
+# הררי ושות' - משרד עורכי-דין — Generative Engine Optimization Map
+
+> Harari & Co. is a law firm specializing in two core practice areas: personal injury law (including traffic accident claims and medical malpractice) and corporate legal services (including ongoing legal counsel and contract drafting). The firm positions itself as a professional and trustworthy legal partner for both individuals seeking compensation and businesses requiring ongoing legal support.
+
+---
+
+## Pages
+
+### בית
+https://harari-and-co-law-office.zappy5.app
+נפגעתם בתאונת דרכים, רשלנות רפואית או נפילה במדרכה? הררי ושות&#39; לצידכם. ייעוץ משפטי מקצועי, תוצאות מוכחות. פנו אלינו עוד היום.
+
+### אודות המשרד
+https://harari-and-co-law-office.zappy5.app/about-the-office
+הררי ושות&#39; הוא משרד עורכי דין עם מוניטין מוכח בנזקי גוף וייעוץ משפטי לעסקים. גלו מי אנחנו, מה מניע אותנו ולמה לקוחות בוחרים בנו שוב ושוב.
+
+### צור קשר
+https://harari-and-co-law-office.zappy5.app/contact
+יש לכם שאלה על תאונת דרכים, רשלנות רפואית או עריכת חוזים? צרו קשר עם הררי ושות&#39; עכשיו לייעוץ ראשוני ומקצועי — כי כל יום שעובר חשוב.
+
+## Legal & Policy
+
+### Privacy Policy
+https://harari-and-co-law-office.zappy5.app/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://harari-and-co-law-office.zappy5.app/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://harari-and-co-law-office.zappy5.app/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+## How to Contact Us
+
+- Email: office@yharari-law.co.il
+- Phone: 074-7642466
+- Phone (tel): tel:0747642466
+- Address: כרמיאל
+
+### Contact form
+- URL: https://harari-and-co-law-office.zappy5.app/contact
+- Endpoint: https://harari-and-co-law-office.zappy5.app/api/email/contact-form
+- Method: POST
+- Content-Type: application/json
+- Fields:
+  - `name` (text, required)
+  - `email` (email, required)
+  - `phone` (tel, required)
+  - `message` (textarea, required)
+  - `privacy_consent` (checkbox, required)
+
+---
+
+# Business Context (for LLM understanding)
+
+## About הררי ושות' - משרד עורכי-דין
+Harari & Co. is a law firm specializing in two core practice areas: personal injury law (including traffic accident claims and medical malpractice) and corporate legal services (including ongoing legal counsel and contract drafting). The firm positions itself as a professional and trustworthy legal partner for both individuals seeking compensation and businesses requiring ongoing legal support.
+
+## Services/Products
+- נזקי גוף - פלת"ד
+- רשלנות רפואית
+- ליווי חברות - ייעוץ שוטף
+- עריכת חוזים
+
+## Target Audience
+- לקוחות תאגידיים
+- לקוחות פרטיים
+
+## Industry
+משפט / שירותים משפטיים
+
+---
+
+# Machine-readable feeds
+
+- Sitemap (XML): https://harari-and-co-law-office.zappy5.app/sitemap.xml
+- Robots: https://harari-and-co-law-office.zappy5.app/robots.txt
+- Flattened page text (for LLMs): https://harari-and-co-law-office.zappy5.app/llms-full.txt
