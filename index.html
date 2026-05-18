@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>רשלנות רפואית — הררי ושות&#39; - משרד עורכי-דין</title>
+    <meta name="description" content="נפגעתם בתאונת דרכים, רשלנות רפואית או נפילה במדרכה? הררי ושות&#39; לצידכם. ייעוץ משפטי מקצועי, תוצאות מוכחות. פנו אלינו עוד היום.">
+    <meta name="keywords" content="רשלנות רפואית, עורך דין נזקי גוף, תאונת דרכים, ייעוץ משפטי, נפילה במדרכה">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'ff5e3ec8-5b05-4fa9-b05d-3c907abae5b6',
+    apiUrl: 'https://qaapi.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="רשלנות רפואית — הררי ושות&#39; - משרד עורכי-דין">
+    <meta property="og:description" content="נפגעתם בתאונת דרכים, רשלנות רפואית או נפילה במדרכה? הררי ושות&#39; לצידכם. ייעוץ משפטי מקצועי, תוצאות מוכחות. פנו אלינו עוד היום.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="רשלנות רפואית — הררי ושות&#39; - משרד עורכי-דין">
+    <meta name="twitter:description" content="נפגעתם בתאונת דרכים, רשלנות רפואית או נפילה במדרכה? הררי ושות&#39; לצידכם. ייעוץ משפטי מקצועי, תוצאות מוכחות. פנו אלינו עוד היום.">
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://harari-and-co-law-office.zappy5.app#organization","name":"הררי ושות' - משרד עורכי-דין","url":"https://harari-and-co-law-office.zappy5.app","description":"Harari & Co. is a law firm specializing in two core practice areas: personal injury law (including traffic accident claims and medical malpractice) and corporate legal services (including ongoing legal counsel and contract drafting). The firm positions itself as a professional and trustworthy legal partner for both individuals seeking compensation and businesses requiring ongoing legal support.","address":{"@type":"PostalAddress","streetAddress":"כרמיאל"},"contactPoint":[{"@type":"ContactPoint","contactType":"customer service","email":"office@yharari-law.co.il","telephone":"074-7642466"}]},{"@type":"WebSite","@id":"https://harari-and-co-law-office.zappy5.app#website","url":"https://harari-and-co-law-office.zappy5.app","name":"הררי ושות' - משרד עורכי-דין","publisher":{"@id":"https://harari-and-co-law-office.zappy5.app#organization"}}]}</script>
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+
+
+
+<style data-zappy-section-v2-css="true">
+/* V2 Regenerated Section CSS */
+.index-hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: visible;
+  background-color: #183153;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  padding-bottom: 80px;
+  direction: rtl;
+}
+
+/* Background image layer */
+.index-hero-section .index-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.index-hero-section .index-hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 0;
+}
+
+/* Scrim overlay */
+.index-hero-section .index-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-color: #183153;
+  background-image:
+    linear-gradient(to top,
+      rgba(24, 49, 83, 0.92) 0%,
+      rgba(24, 49, 83, 0.78) 40%,
+      rgba(24, 49, 83, 0.50) 70%,
+      rgba(24, 49, 83, 0.30) 100%
+    );
+}
+
+/* Skyline decorative motif */
+.index-hero-section .index-hero-skyline-motif {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 100%;
+  height: 220px;
+  z-index: 2;
+  pointer-events: none;
+  background-image: linear-gradient(to top, rgba(24,49,83,0.62) 0%, transparent 100%);
+}
+
+/* Container */
+.index-hero-section .index-hero-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 160px 48px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Content block */
+.index-hero-section .index-hero-content {
+  max-width: 700px;
+  text-align: right;
+}
+
+/* Firm label */
+.index-hero-section .index-hero-label {
+  font-family: 'Inter', 'Source Sans 3', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: inline-block;
+  text-align: right;
+}
+
+/* Gold accent line */
+.index-hero-section .index-hero-accent-line {
+  width: 56px;
+  height: 2px;
+  background: linear-gradient(90deg, #C6A46C 0%, #e8d5a3 60%, #C6A46C 100%);
+  margin-bottom: 24px;
+  margin-inline-start: 0;
+  border-radius: 2px;
+}
+
+/* H1 */
+.index-hero-section .index-hero-h1 {
+  font-family: 'Cormorant Garamond', 'Libre Baskerville', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-light);
+  margin: 0 0 12px;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.45);
+  text-align: right;
+}
+
+.index-hero-section .index-hero-h1-accent {
+  color: var(--accent);
+  display: inline;
+}
+
+/* H3 subtitle */
+.index-hero-section .index-hero-h3 {
+  font-family: 'Inter', 'Source Sans 3', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(250, 249, 247, 0.88);
+  margin: 0 0 36px;
+  max-width: 620px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+  text-align: right;
+}
+
+/* CTA group */
+.index-hero-section .index-hero-ctas {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Primary button */
+.index-hero-section .index-hero-btn-primary {
+  display: inline-block;
+  background: var(--accent);
+  color: #183153;
+  font-family: 'Inter', 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 14px 32px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 12px 40px rgba(198, 164, 108, 0.30);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.index-hero-section .index-hero-btn-primary:hover {
+  background: #e8d5a3;
+  color: #183153;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 48px rgba(198, 164, 108, 0.45);
+}
+
+/* Secondary button */
+.index-hero-section .index-hero-btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--text-light);
+  font-family: 'Inter', 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 13px 28px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(198, 164, 108, 0.70);
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.index-hero-section .index-hero-btn-secondary:hover {
+  background: rgba(198, 164, 108, 0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Bottom divider wrapper */
+.index-hero-section .index-hero-divider-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.index-hero-section .index-hero-divider-wrapper svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .index-hero-section {
+    min-height: 100svh;
+    align-items: flex-end;
+    padding-bottom: 80px;
+  }
+
+  .index-hero-section .index-hero-container {
+    padding: 100px 20px 48px;
+    align-items: flex-start;
+  }
+
+  .index-hero-section .index-hero-content {
+    max-width: 100%;
+  }
+
+  .index-hero-section .index-hero-h1 {
+    font-size: 2.1rem;
+    line-height: 1.2;
+  }
+
+  .index-hero-section .index-hero-h3 {
+    font-size: 0.97rem;
+    max-width: 100%;
+    margin-bottom: 28px;
+  }
+
+  .index-hero-section .index-hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .index-hero-section .index-hero-btn-primary,
+  .index-hero-section .index-hero-btn-secondary {
+    text-align: center;
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  .index-hero-section .index-hero-skyline-motif {
+    height: 140px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .index-hero-section .index-hero-container {
+    padding: 140px 32px 60px;
+  }
+
+  .index-hero-section .index-hero-h1 {
+    font-size: 2.5rem;
+  }
+}
+</style>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+        #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+          display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+        #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+          display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+        }
+      }
+    </style>
+</head>
+<body>
+
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="0747642466" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-right-group"><div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.webp" alt="הררי ושות' - משרד עורכי-דין" class="logo">
+      </a>
+    </div><ul class="nav-menu" id="navMenu"><li><a href="/about-the-office">אודות המשרד</a></li></ul></div>
+
+    
+
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '50%', 'important');
+          mobileToggle.style.setProperty('transform', 'translateY(-50%)', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '50%', 'important');
+          phoneBtn.style.setProperty('transform', 'translateY(-50%)', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu on button click - use newToggle now
+    newToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = this.querySelector('.hamburger-icon');
+      const closeIcon = this.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    });
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '074-7642466';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // === WHATSAPP BUTTON VISIBILITY FIX ===
+    // Ensure WhatsApp floating button is hidden on desktop and visible on mobile
+    // IMPORTANT: Only target the floating button by its class, NOT generic wa.me links
+    const handleWhatsAppVisibility = function() {
+      const whatsappBtn = document.querySelector('.whatsapp-float');
+      if (whatsappBtn) {
+        const isDesktop = window.innerWidth >= 769;
+        if (isDesktop) {
+          whatsappBtn.style.setProperty('display', 'none', 'important');
+          whatsappBtn.style.setProperty('visibility', 'hidden', 'important');
+          whatsappBtn.style.setProperty('opacity', '0', 'important');
+          whatsappBtn.style.setProperty('pointer-events', 'none', 'important');
+          console.log('[WhatsApp] Button hidden on desktop');
+        } else {
+          whatsappBtn.style.removeProperty('display');
+          whatsappBtn.style.removeProperty('visibility');
+          whatsappBtn.style.removeProperty('opacity');
+          whatsappBtn.style.removeProperty('pointer-events');
+          console.log('[WhatsApp] Button visible on mobile');
+        }
+      }
+    };
+    
+    // Run on load
+    handleWhatsAppVisibility();
+    
+    // Run on resize with debouncing
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleWhatsAppVisibility, 100);
+    });
+  });
+})();
+
+</script>
+  
+  <main>
+    <section class="index-hero-section" data-layout-spec="בית-hero" dir="rtl" data-hero-type="fullscreen-scrim" data-zappy-section="true" id="index-hero-section" style="min-height: 802.813px !important;">
+  <!-- Background Image Layer -->
+  <div class="index-hero-bg">
+    <img data-hero-bg="true" alt="משרד עורכי דין הררי ושות' - ייצוג משפטי מקצועי" class="index-hero-bg-img" src="/assets/site-index-hero-image-1.webp" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%" data-zappy-editable-image="true" data-hero-background="true" data-element-type="image" data-element-id="img-1777896376953-e52jxdqvj">
+  </div>
+
+  <!-- Scrim Overlay -->
+  <div class="index-hero-scrim" aria-hidden="true"></div>
+
+  <!-- Decorative skyline overlay motif -->
+  <div class="index-hero-skyline-motif" aria-hidden="true"></div>
+
+  <!-- Content -->
+  <div class="index-hero-container">
+    <div class="index-hero-content">
+
+      <!-- Firm label -->
+      <div class="index-hero-label">הררי ושות׳ — משרד עורכי-דין</div>
+
+      <!-- Gold accent line -->
+      <div class="index-hero-accent-line" aria-hidden="true"></div>
+
+      <!-- Main Headline -->
+      <h1 class="index-hero-h1" style="">אנחנו לא רק מייצגים - אנחנו נלחמים.&nbsp;<br><span class="index-hero-h1-accent">בכל תיק, בכל פעם.&nbsp;</span></h1>
+
+      <!-- Subtitle -->
+      <h3 class="index-hero-h3" style="">
+
+בין אם נפגעתם בתאונה ובין אם נקלעתם לסכסוך משפטי - אנחנו יודעים איך לנצח</h3>
+
+      <!-- CTA Buttons -->
+      <div class="index-hero-ctas">
+        <a href="tel:074-7642466" class="index-hero-btn-primary" data-element-type="button" data-element-id="btn-1777896376950-joiztba06" data-native-element="true" style="outline: none;">לקביעת פגישת ייעוץ</a>
+        <a href="/about-the-office" class="index-hero-btn-secondary" data-element-type="button" data-element-id="btn-1777896376950-1n0z5nldq" data-native-element="true" style="outline: none;">הכירו את המשרד</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom divider -->
+  <div class="index-hero-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,50 Q180,20 360,45 T720,30 Q900,15 1080,40 T1440,28 L1440,80 Z" fill="#FFFFFF"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="index-services-section" dir="rtl" id="index-services-section">
+  <div class="index-services-container">
+
+    <div class="index-services-intro">
+      <p class="index-services-eyebrow" style="color: rgb(24, 49, 83) !important;">תחומי התמחות</p>
+      <h2 class="index-services-heading" style="">ייצוג משפטי במגוון רחב של הליכי ליטיגציה אזרחית-מסחרית ותביעות נזקי גוף</h2>
+      <div class="index-services-gold-rule" aria-hidden="true"></div>
+      
+    </div>
+
+    <!-- Row 1: Personal Injury -->
+    <div class="index-services-row-block">
+      <div class="index-services-row-header">
+        <p><span class="index-services-row-tag">נזקי גוף</span>
+        </p><div class="index-services-row-rule"></div>
+      </div>
+      <div class="index-services-scroll-wrapper">
+        <div class="index-services-scroll-row" data-original-item-width="240" data-original-gap="20px" data-original-justify-content="normal" style="--zappy-item-width: 240px; --zappy-justify-content: normal; gap: 20px;">
+
+          <div class="index-services-card" data-grid-item-index="0">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-medical-malpractice-1778223865081-maxtq6.webp?v=1778223865081" alt="רשלנות רפואית" class="index-services-card-img" data-placeholder="services-medical-malpractice" data-context="A doctor reviewing medical documents and X-rays in a clinical setting, serious professional atmosphere, hospital environment, editorial photography style, clean and clinical tones" data-element-type="image" data-element-id="img-1778222570798-sk2ztat13">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">רשלנות רפואית</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="1">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-car-accidents-1778226218085-osqvco.webp?v=1778226218085" alt="תאונות דרכים" class="index-services-card-img" data-placeholder="services-car-accidents" data-context="A person on the phone standing next to a damaged car after a traffic accident, concerned expression, daytime, photorealistic, editorial photography style, navy and neutral tones" data-element-type="image" data-element-id="img-1778222570798-kqg8gis6n">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">תאונות דרכים</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="2">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-slip-fall-1778220541458-fd1ih9.webp?v=1778220541458" alt="נפילה והחלקה" class="index-services-card-img" data-placeholder="services-slip-fall" data-context="A wet floor warning sign in a public building corridor, blurred background suggesting a fall hazard, editorial photography style, neutral tones" data-element-type="image" data-element-id="img-1778222570798-rg8i0n8w5">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">נפילה והחלקה</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="3">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-dog-bites-1778222462442-8fdaid.webp?v=1778222462442" alt="נשיכות כלבים" class="index-services-card-img" data-placeholder="services-dog-bites" data-context="A person with a bandaged arm or hand after a dog bite injury, showing concern, neutral outdoor background, editorial photography style, warm neutral tones" data-element-type="image" data-element-id="img-1778222570798-ric60cgvt">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">נשיכות כלבים</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="4">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-assault-1778223594824-c9px3h.webp?v=1778223594824" alt="תקיפה ופגיעה מינית" class="index-services-card-img" data-placeholder="services-assault" data-context="A supportive lawyer or counselor speaking gently with a distressed client in a private office, compassionate atmosphere, soft lighting, editorial photography style, warm tones" data-element-type="image" data-element-id="img-1778222570798-mk3kfr5ff">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">נפגעי תקיפה</h3>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Civil / Commercial Litigation -->
+    <div class="index-services-row-block">
+      <div class="index-services-row-header">
+        <p><span class="index-services-row-tag">ליטיגציה אזרחית מסחרית</span>
+        </p><div class="index-services-row-rule"></div>
+      </div>
+      <div class="index-services-scroll-wrapper">
+        <div class="index-services-scroll-row" data-original-item-width="240" data-original-gap="20px" data-original-justify-content="normal" style="--zappy-item-width: 240px; --zappy-justify-content: normal; gap: 20px;">
+
+          <div class="index-services-card" data-grid-item-index="0">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-property-damage-1778222804738-gfw9x9.webp?v=1778222804738" alt="נזקי רכוש" class="index-services-card-img" data-placeholder="services-property-damage" data-element-type="image" data-element-id="img-1778222570798-dhissrks2">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">נזקי רכוש</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="1">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-contracts-1778224612838-pcqg3t.webp?v=1778224612838" alt="חוזים והסכמי התקשרות" class="index-services-card-img" data-placeholder="services-contracts" data-element-type="image" data-element-id="img-1778222570798-11jl0tln4">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">חוזים והסכמי התקשרות</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="2">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-legal-consulting-1778220627259-9rjlvq.webp?v=1778220627259" alt="ייעוץ משפטי וניהול סיכונים" class="index-services-card-img" data-placeholder="services-legal-consulting" data-element-type="image" data-element-id="img-1778222570798-hvmpu0lhi">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">ייעוץ משפטי וניהול סיכונים</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="3">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-debt-collection-1778222710339-z80icz.webp?v=1778222710339" alt="הוצאה לפועל" class="index-services-card-img" data-placeholder="services-debt-collection" data-element-type="image" data-element-id="img-1778222570798-mubhrx4sh">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">הוצאה לפועל</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="4">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-product-liability-1778224353176-61wfin.webp?v=1778224353176" alt="אחריות מוצר" class="index-services-card-img" data-placeholder="services-product-liability" data-element-type="image" data-element-id="img-1778222570798-cck5hb0xa">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">אחריות מוצר</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="5">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-construction-defects-1778220690346-gc9455.webp?v=1778220690346" alt="ליקויי בנייה" class="index-services-card-img" data-placeholder="services-construction-defects" data-element-type="image" data-element-id="img-1778222570798-adiiebw75">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">ליקויי בנייה</h3>
+            </div>
+          </div>
+
+          <div class="index-services-card" data-grid-item-index="6">
+            <div class="index-services-card-img-wrap">
+              <img src="/assets/site-index-services-partner-disputes-1778220711913-tc8zgg.webp?v=1778220711913" alt="סכסוכי שותפים" class="index-services-card-img" data-placeholder="services-partner-disputes" data-element-type="image" data-element-id="img-1778222570798-jo58xab01">
+            </div>
+            <div class="index-services-card-body">
+              <h3 class="index-services-card-title">סכסוכי שותפים</h3>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="index-services-divider-wrapper">
+    <svg aria-hidden="true" viewBox="0 0 1200 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,72 L0,36 L1200,8 L1200,72 Z" fill="#F5F3EF"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="index-proof-section" data-layout-spec="בית-proof" dir="rtl" id="index-proof-section">
+  <div class="index-proof-container">
+
+    <!-- Intro Block -->
+    <div class="index-proof-intro">
+      <h2 class="index-proof-heading" style="">מדוע לקוחות בוחרים בנו</h2>
+      <div class="index-proof-diamond" aria-hidden="true">
+        <svg data-no-icon-edit="true" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="6" width="8.485" height="8.485" transform="rotate(-45 6 6)" fill="#C6A46C"></rect></svg>
+      </div>
+      <p class="index-proof-lead" style="color: rgb(24, 49, 83) !important;">ליטיגציה
+בלב המשרד - אנחנו לא משרד שעוסק "בין השאר" בליטיגציה. זה מה שאנחנו עושים.<br><br>גישה אגרסיבית-מקצועית - אנחנו לא מפחדים מעימות בבית המשפט. שם נמצא הניצחון.<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br>שקיפות מלאה - אתם תמיד יודעים איפה התיק שלכם עומד, מה השלב הבא ומה הסיכוי להצלחה.&nbsp;&nbsp;<br><br>יחס
+אישי בכל תיק - מהפגישה הראשונה ועד פסק הדין.<br><br>ניסיון
+בשני צידי המתרס - אנחנו יודעים איך חושב הצד שכנגד, כי גם ייצגנו אותו.<br><br>שכר
+טרחה מותנה - בתיקי נזיקין, אתם משלמים רק כשאנחנו מנצחים.<br></p>
+    </div>
+
+    <!-- Three Proof Cards -->
+    <div class="index-proof-cards zappy-preserve-css-grid" id="zappy-auto-grid-1777534126060-u7xigr" data-zappy-auto-grid="true" data-original-item-width="384" data-original-gap="24px" style="display: grid; --zappy-grid-cols: repeat(3, minmax(0, 1fr)); grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch !important;" data-zappy-explicit-columns="true">
+
+      <article class="index-proof-card" data-grid-item-index="0">
+        <div class="index-proof-card-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="38" height="38" viewBox="0 0 24 24" data-icon="line-md:confirm-circle" data-iconify="line-md:confirm-circle" data-element-type="icon" data-element-id="zappy-temp-icon-1778227649690-u1foxyy89" data-icon-type="iconify" data-size-adjusted="true" style="width: 38px; height: 38px; display: inline-block; vertical-align: -0.125em; color: rgb(198, 164, 108); pointer-events: auto; cursor: pointer;" class="iconify iconify--line-md"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" d="M3 12c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="60;0"></animate></path><path stroke-dasharray="14" stroke-dashoffset="14" d="M8 12l3 3l5 -5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" to="0"></animate></path></g></svg>
+        </div>
+        <div class="index-proof-card-content">
+          <h3 class="index-proof-card-title">בהירות אסטרטגית</h3>
+          <p class="index-proof-card-text" style="">אנו מנתחים כל תיק לעומקו ומגבשים אסטרטגיה משפטית ברורה ומדויקת. הלקוח מבין בכל שלב מה מתרחש, מה האפשרויות, ומה צפוי — ללא עמימות וללא הפתעות.</p>
+        </div>
+      </article>
+
+      <article class="index-proof-card" data-grid-item-index="1">
+        <div class="index-proof-card-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="38" height="38" viewBox="0 0 24 24" data-icon="line-md:person-filled" data-iconify="line-md:person-filled" data-element-type="icon" data-element-id="zappy-temp-icon-1778227633547-rep5v07fa" data-icon-type="iconify" data-size-adjusted="true" style="width: 38px; height: 38px; display: inline-block; vertical-align: -0.125em; color: rgb(198, 164, 108); pointer-events: auto; cursor: pointer;" class="iconify iconify--line-md"><g fill="currentColor" fill-opacity="0" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="22" d="M12 5c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="22;0"></animate><animate fill="freeze" attributeName="fill-opacity" begin="1.1s" dur="0.4s" to="1"></animate></path><path stroke-dasharray="38" stroke-dashoffset="38" d="M12 14c4 0 7 2 7 3v2h-14v-2c0 -1 3 -3 7 -3Z"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.5s" to="0"></animate><animate fill="freeze" attributeName="fill-opacity" begin="1.1s" dur="0.4s" to="1"></animate></path></g></svg>
+        </div>
+        <div class="index-proof-card-content">
+          <h3 class="index-proof-card-title" style="">ליווי אישי</h3>
+          <p class="index-proof-card-text" style="">אצלנו, התיק שלך לא עובר מיד ליד - הוא מקבל את מלוא תשומת הלב מהרגע הראשון.&nbsp;</p>
+        </div>
+      </article>
+
+      <article class="index-proof-card" data-grid-item-index="2">
+        <div class="index-proof-card-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="38" height="38" viewBox="0 0 24 24" data-icon="mdi:clock-outline" data-iconify="mdi:clock-outline" data-element-type="icon" data-element-id="zappy-temp-icon-1778227581668-949ec9yxi" data-icon-type="iconify" data-size-adjusted="true" style="display: inline-block; vertical-align: -0.125em; color: rgb(198, 164, 108); width: 38px !important; height: 38px !important; pointer-events: auto; cursor: pointer;" class="iconify iconify--mdi"><path fill="currentColor" d="M12 20a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67l-.75 1.23L11 13V7z"></path></svg>
+        </div>
+        <div class="index-proof-card-content">
+          <h3 class="index-proof-card-title" style="">זמינות מסביב לשעון</h3>
+          <p class="index-proof-card-text" style="">אנחנו תמיד כאן בשבילכם - זמינים, קשובים ומחויבים למענה מהיר לכל פנייה.&nbsp;</p>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Trust Signals Row -->
+    <div class="index-proof-trust-row">
+
+      <div class="index-proof-trust-item">
+        <span class="index-proof-trust-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M10 2L12.09 7.26L17.66 7.64L13.5 11.14L14.82 16.56L10 13.6L5.18 16.56L6.5 11.14L2.34 7.64L7.91 7.26L10 2Z" stroke="currentColor" stroke-width="1.2" fill="none"></path>
+          </svg>
+        </span>
+        <span class="index-proof-trust-text">תקשורת ישירה וברורה</span>
+      </div>
+
+      <div class="index-proof-trust-separator" aria-hidden="true"></div>
+
+      <div class="index-proof-trust-item">
+        <span class="index-proof-trust-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M10 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" stroke="currentColor" stroke-width="1.2" fill="none"></path>
+          </svg>
+        </span>
+        <span class="index-proof-trust-text">אסטרטגיה משפטית מותאמת אישית</span>
+      </div>
+
+      <div class="index-proof-trust-separator" aria-hidden="true"></div>
+
+      <div class="index-proof-trust-item">
+        <span class="index-proof-trust-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="3" y="3" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.2"></rect>
+            <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <span class="index-proof-trust-text" style="">שירות דיסקרטי ומקצועי</span>
+      </div>
+
+      <div class="index-proof-trust-separator" aria-hidden="true"></div>
+
+      <div class="index-proof-trust-item">
+        <span class="index-proof-trust-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M10 2C6.686 2 4 4.686 4 8c0 5 6 10 6 10s6-5 6-10c0-3.314-2.686-6-6-6z" stroke="currentColor" stroke-width="1.2"></path>
+            <circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.2"></circle>
+          </svg>
+        </span>
+        <span class="index-proof-trust-text">ניסיון רב-שנים בבתי משפט</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Bottom Divider: navy band with rounded top corners -->
+  <div class="index-proof-divider-wrapper" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,36 Q60,20 120,32 Q180,44 240,28 Q300,14 360,30 Q420,44 480,26 Q540,10 600,28 Q660,44 720,28 Q780,12 840,30 Q900,46 960,28 Q1020,12 1080,30 Q1140,46 1200,32 L1200,80 Z" fill="#183153"></path>
+    </svg>
+  </div>
+
+</section>
+
+
+
+
+
+<section class="index-reviews-section" data-layout-spec="בית-reviews" dir="rtl" id="index-reviews-section">
+  <!-- Decorative quotation mark background -->
+  <div class="reviews-quote-bg" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="80" font-size="120" font-family="Georgia, serif" fill="#C6A46C" opacity="0.08">"</text>
+    </svg>
+  </div>
+
+  <div class="reviews-container">
+    <!-- Intro Block -->
+    <div class="reviews-intro">
+      <h2 class="reviews-heading" style="">מה הלקוחות שלנו אומרים עלינו</h2>
+      <div class="reviews-gold-rule" aria-hidden="true"></div>
+      
+    </div>
+
+    <!-- Three-Column Review Cards -->
+    <div class="reviews-grid zappy-preserve-css-grid" id="zappy-auto-grid-1777534126070-6we3ak" data-zappy-auto-grid="true" data-original-item-width="384" data-original-gap="24px" style="--zappy-grid-cols: repeat(3, minmax(0, 1fr)); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch !important;" data-zappy-explicit-columns="true">
+
+      <!-- Card 1 -->
+      <article class="review-card" style="background-color: rgba(255, 255, 255, 0.05) !important; padding: 40px !important; box-sizing: border-box; grid-area: auto !important;" data-grid-item-index="0">
+        <div class="review-quote-icon" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 24V14.4C0 10.56 0.96 7.36 2.88 4.8C4.8 2.24 7.68 0.64 11.52 0L13.44 3.36C11.04 3.84 9.12 4.96 7.68 6.72C6.24 8.48 5.52 10.56 5.52 12.96H10.56V24H0ZM18.56 24V14.4C18.56 10.56 19.52 7.36 21.44 4.8C23.36 2.24 26.24 0.64 30.08 0L32 3.36C29.6 3.84 27.68 4.96 26.24 6.72C24.8 8.48 24.08 10.56 24.08 12.96H29.12V24H18.56Z" fill="#C6A46C" opacity="0.6"></path>
+          </svg>
+        </div>
+        <blockquote class="review-text">
+          <p style="cursor: text;">משרד מעולה. היה לנו איחור משמעותי במסירה של הדירה וכל ניסיון להגיע להסדר עם הקבלן נכשל. תוך חודשים בודדים מהרגע שפניתי למשרד, קיבלתי את הפיצוי המלא על האיחור במסירה. התקשורת מול המשרד הייתה פשוטה, הם יעילים ומקצועיים מאוד. ממליצה בחום לכל מי שנאלץ להתמודד מול הקבלן.&nbsp;</p>
+        </blockquote>
+        <footer class="review-footer">
+          <div class="review-stars" aria-label="דירוג 5 כוכבים" style="cursor: text;">
+            <span aria-hidden="true" style="cursor: text;">
+
+★★★★★
+
+</span>
+          </div>
+          <div class="review-client" style="cursor: text;">
+            <span class="review-name" style="cursor: text;">יפעת כהן</span>
+            <span class="review-type" style="cursor: text;">לקוחה פרטית - ליטיגציה מסחרית</span>
+          </div>
+        </footer>
+      </article><article class="review-card" data-grid-item-index="1">
+        <div class="review-quote-icon" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 24V14.4C0 10.56 0.96 7.36 2.88 4.8C4.8 2.24 7.68 0.64 11.52 0L13.44 3.36C11.04 3.84 9.12 4.96 7.68 6.72C6.24 8.48 5.52 10.56 5.52 12.96H10.56V24H0ZM18.56 24V14.4C18.56 10.56 19.52 7.36 21.44 4.8C23.36 2.24 26.24 0.64 30.08 0L32 3.36C29.6 3.84 27.68 4.96 26.24 6.72C24.8 8.48 24.08 10.56 24.08 12.96H29.12V24H18.56Z" fill="#C6A46C" opacity="0.6"></path>
+          </svg>
+        </div>
+        <blockquote class="review-text">
+          <p style="">פניתי למשרד לאחר שנפצעתי בתאונת דרכים. עו"ד הררי ניהל את התביעה שלי בצורה מקצועית והתוצאה הייתה מעבר לכל הציפיות שלי. תודה רבה על כל העזרה והתמיכה.&nbsp;</p>
+        </blockquote>
+        <footer class="review-footer">
+          <div class="review-stars" aria-label="דירוג 5 כוכבים">
+            <span aria-hidden="true">★★★★★</span>
+          </div>
+          <div class="review-client">
+            <span class="review-name" style="">ישראל דיין</span>
+            <span class="review-type" style="">לקוח פרטי — תאונת דרכים</span>
+          </div>
+        </footer>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="review-card" data-grid-item-index="2">
+        <div class="review-quote-icon" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 24V14.4C0 10.56 0.96 7.36 2.88 4.8C4.8 2.24 7.68 0.64 11.52 0L13.44 3.36C11.04 3.84 9.12 4.96 7.68 6.72C6.24 8.48 5.52 10.56 5.52 12.96H10.56V24H0ZM18.56 24V14.4C18.56 10.56 19.52 7.36 21.44 4.8C23.36 2.24 26.24 0.64 30.08 0L32 3.36C29.6 3.84 27.68 4.96 26.24 6.72C24.8 8.48 24.08 10.56 24.08 12.96H29.12V24H18.56Z" fill="#C6A46C" opacity="0.6"></path>
+          </svg>
+        </div>
+        <blockquote class="review-text">
+          <p style="">מהטובים ביותר בתחום. עו"ד הררי מלווה את החברה שלנו כבר 5 שנים. הוא מגיב מהר, מסביר את הסיכונים בצורה עניינית, מקצועי מאוד ויורד לפרטים.&nbsp;</p>
+        </blockquote>
+        <footer class="review-footer">
+          <div class="review-stars" aria-label="דירוג 5 כוכבים">
+            <span aria-hidden="true">★★★★★</span>
+          </div>
+          <div class="review-client">
+            <span class="review-name" style="">נחמן סופרין, מנכ"ל חברת ליה פרויקטים בע"מ&nbsp;</span>
+            <span class="review-type">לקוח עסקי — ייעוץ משפטי שוטף</span>
+          </div>
+        </footer>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="review-card" data-grid-item-index="3" style="">
+        <div class="review-quote-icon" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 24V14.4C0 10.56 0.96 7.36 2.88 4.8C4.8 2.24 7.68 0.64 11.52 0L13.44 3.36C11.04 3.84 9.12 4.96 7.68 6.72C6.24 8.48 5.52 10.56 5.52 12.96H10.56V24H0ZM18.56 24V14.4C18.56 10.56 19.52 7.36 21.44 4.8C23.36 2.24 26.24 0.64 30.08 0L32 3.36C29.6 3.84 27.68 4.96 26.24 6.72C24.8 8.48 24.08 10.56 24.08 12.96H29.12V24H18.56Z" fill="#C6A46C" opacity="0.6"></path>
+          </svg>
+        </div>
+        <blockquote class="review-text">
+          <p style="">עברתי רשלנות רפואית בטיפול שיניים, סבלתי מכאבים כרוניים ומדלקות חוזרות ונאלצתי להוציא סכומי עתק כדי לתקן את הנזק שנגרם מהטיפול. מהרגע שהגעתי למשרד, הרגשתי שיש לי גב מקצועי. עורך דין נזקי גוף שמתמחה במקרים של רשלנות רפואית, זה עו"ד הררי.&nbsp;</p>
+        </blockquote>
+        <footer class="review-footer">
+          <div class="review-stars" aria-label="דירוג 5 כוכבים">
+            <span aria-hidden="true" style="">★★★★★</span>
+          </div>
+          <div class="review-client">
+            <span class="review-name" style="">י. ו.&nbsp;</span>
+            <span class="review-type">לקוחה פרטית — תביעת רשלנות רפואית</span>
+          </div>
+        </footer>
+      </article><article class="review-card" style="background-color: rgba(255, 255, 255, 0.05) !important; padding: 40px !important; box-sizing: border-box; grid-area: auto !important;" data-grid-item-index="4">
+        <div class="review-quote-icon" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 24V14.4C0 10.56 0.96 7.36 2.88 4.8C4.8 2.24 7.68 0.64 11.52 0L13.44 3.36C11.04 3.84 9.12 4.96 7.68 6.72C6.24 8.48 5.52 10.56 5.52 12.96H10.56V24H0ZM18.56 24V14.4C18.56 10.56 19.52 7.36 21.44 4.8C23.36 2.24 26.24 0.64 30.08 0L32 3.36C29.6 3.84 27.68 4.96 26.24 6.72C24.8 8.48 24.08 10.56 24.08 12.96H29.12V24H18.56Z" fill="#C6A46C" opacity="0.6"></path>
+          </svg>
+        </div>
+        <blockquote class="review-text">
+          <p style="cursor: text;">
+
+מרוצה מאוד מהעבודה המקצועית של עורך דין יקיר הררי והצוות. הם עזרו לי בכל שלב בתהליך. זכיתי ליחס אישי וחם, הרבה מעבר למה שמצופה מעורך דין, ממש כמו חבר. בשורה התחתונה, הגענו לתוצאה מעולה. ממליץ עליהם בחום!
+
+</p>
+        </blockquote>
+        <footer class="review-footer">
+          <div class="review-stars" aria-label="דירוג 5 כוכבים" style="cursor: text;">
+            <span aria-hidden="true" style="cursor: text;">
+
+★★★★★
+
+</span>
+          </div>
+          <div class="review-client" style="cursor: text;">
+            <span class="review-name" style="cursor: text;">מ.ס.&nbsp;</span>
+            <span class="review-type" style="cursor: text;">לקוח פרטי - תביעת נזקי גוף</span>
+          </div>
+        </footer>
+      </article><article class="review-card" style="background-color: rgba(255, 255, 255, 0.05) !important; padding: 40px !important; box-sizing: border-box; grid-area: auto !important;" data-grid-item-index="5">
+        <div class="review-quote-icon" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 24V14.4C0 10.56 0.96 7.36 2.88 4.8C4.8 2.24 7.68 0.64 11.52 0L13.44 3.36C11.04 3.84 9.12 4.96 7.68 6.72C6.24 8.48 5.52 10.56 5.52 12.96H10.56V24H0ZM18.56 24V14.4C18.56 10.56 19.52 7.36 21.44 4.8C23.36 2.24 26.24 0.64 30.08 0L32 3.36C29.6 3.84 27.68 4.96 26.24 6.72C24.8 8.48 24.08 10.56 24.08 12.96H29.12V24H18.56Z" fill="#C6A46C" opacity="0.6"></path>
+          </svg>
+        </div>
+        <blockquote class="review-text">
+          <p style="cursor: text;">תמיד זמינים, מביאים תוצאות מהר ושמים לב לפרטים הקטנים. הם מבינים את המטרות של העסק ובונים אסטרטגיה משפטית שמתאימה בדיוק למקרה.&nbsp;&nbsp;</p>
+        </blockquote>
+        <footer class="review-footer">
+          <div class="review-stars" aria-label="דירוג 5 כוכבים" style="cursor: text;">
+            <span aria-hidden="true" style="cursor: text;">
+
+★★★★★
+
+</span>
+          </div>
+          <div class="review-client" style="cursor: text;">
+            <span class="review-name" style="cursor: text;">עופר בנדלק, מנכ"ל טרקטורוני דישון בע"מ&nbsp;</span>
+            <span class="review-type" style="cursor: text;">לקוח עסקי - ליטיגציה מסחרית</span>
+          </div>
+        </footer>
+      </article>
+
+    </div>
+
+    <!-- CTA Block -->
+    <div class="reviews-cta-block">
+      <div class="reviews-cta-inner">
+        <p class="reviews-cta-text" style="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+מחפשים
+עורך דין שיילחם עבורכם, ולא רק "ינהל לכם את התיק"? פנו אלינו עוד היום.
+
+
+
+
+
+</p>
+        <p style="color: rgb(250, 249, 247) !important;"><a href="#contact" class="reviews-cta-btn" data-element-type="button" data-element-id="btn-1777534125956-q5yg2b4oa" data-native-element="true">פנו אלינו עכשיו</a>
+      </p></div>
+    </div>
+  </div>
+
+  <!-- Bottom Transition: gradient fade from deep navy to ivory with gold line -->
+  <div class="reviews-bottom-transition" aria-hidden="true">
+    <div class="reviews-gold-line"></div>
+    <div class="reviews-gradient-fade"></div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" dir="rtl">
+  <div class="footer-main">
+    <div class="footer-container">
+      <div class="footer-grid">
+
+        <!-- Column 1: Company Info -->
+        <div class="footer-col footer-col--brand">
+          <div class="footer-logo-wrap">
+            <img src="/assets/logo.webp" alt="הררי ושות' - משרד עורכי-דין" class="logo" data-element-type="image" data-element-id="img-1777539159723-89i41lwzj" data-zappy-footer-image="true" style="object-fit: cover; object-position: 50% 50%; width: 157px !important; max-width: none !important; max-height: none !important; height: auto !important;">
+          </div>
+          <p class="footer-tagline" style="">מעטפת משפטית שמותאמת לצרכי הלקוח.&nbsp;</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook" class="social-link" style="display:none !important;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram" class="social-link" style="display:none !important;"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="WhatsApp" class="social-link" style="display:none !important;"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="footer-col footer-col--links">
+          <h3 class="footer-heading">
+            <span class="footer-heading-accent"></span>
+            ניווט מהיר
+          </h3>
+          <ul class="footer-nav">
+            
+            <li><a href="/about-the-office">אודות המשרד</a></li>
+            <li><a href="/contact"><i class="fas fa-chevron-left footer-nav-icon"></i>צור קשר</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Contact Info -->
+        <div class="footer-col footer-col--contact">
+          <h3 class="footer-heading">
+            <span class="footer-heading-accent"></span>
+            פרטי התקשרות
+          </h3>
+          <ul class="footer-contact" style=""><li>
+              <span class="contact-icon"><i class="fas fa-envelope" data-element-type="icon" data-element-id="icon-1777539159722-vjw0bonuz" data-icon-type="fontawesome" style="cursor: pointer;"></i></span>
+              <span class="contact-text"><a href="/cdn-cgi/l/email-protection#afc0c9c9c6cccaefd6c7ceddceddc682c3ced881ccc081c6c3" style="">office@yharari-law.co.il<br></a></span>
+            </li><li>
+              <span class="contact-icon"><i class="fas fa-phone" data-element-type="icon" data-element-id="icon-1777539159722-0t1dp3yg2" data-icon-type="fontawesome" style="cursor: pointer;"></i></span>
+              <span class="contact-text"><a href="tel:074-7642466">074-7642466</a></span>
+            </li><li><a href="/" style=""><span class="contact-icon"><i class="fas fa-map-marker-alt" style="cursor: pointer;"></i></span>
+              <span class="contact-text">צפת/כרמיאל</span></a></li></ul>
+        </div>
+
+        <!-- Column 4: Office Hours -->
+        <div class="footer-col footer-col--hours">
+          <h3 class="footer-heading">
+            <span class="footer-heading-accent"></span>
+            שעות פעילות
+          </h3>
+          <ul class="footer-hours" style=""><li><a href="/"><span class="hours-day">ראשון – חמישי</span>
+              <span class="hours-time">09:00 – 18:00</span></a></li><li><a href="/"><span class="hours-day">שישי שבת</span>
+              <span class="hours-time">סגור</span></a></li></ul>
+          <p><a href="/contact" class="footer-cta-btn" data-element-type="button" data-element-id="btn-1777539159720-3yqgpvkqz" data-native-element="true">קבע פגישת ייעוץ</a>
+        </p></div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="footer-divider-wrap">
+    <div class="footer-container">
+      <div class="footer-divider"></div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="footer-container">
+      <div class="footer-bottom-inner">
+        <p class="footer-copyright" style="">© 2026 הררי ושות' - משרד עורכי-דין. כל הזכויות שמורות.</p>
+        <div class="footer-legal-links">
+          <a href="/privacy">מדיניות פרטיות</a>
+          <span class="footer-legal-sep" aria-hidden="true">|</span>
+          <a href="/terms">תנאי שימוש</a>
+          <span class="footer-legal-sep" aria-hidden="true">|</span>
+          <a href="/accessibility">נגישות</a>
+          <span class="footer-legal-sep" aria-hidden="true">|</span>
+          <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/972525752757" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <script>
+(function() {
+  function enableWheelScroll() {
+    var wrappers = document.querySelectorAll('.index-services-scroll-wrapper');
+    wrappers.forEach(function(wrapper) {
+      wrapper.addEventListener('wheel', function(e) {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          wrapper.scrollLeft -= e.deltaY * 1.5;
+        }
+      }, { passive: false });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', enableWheelScroll);
+  } else {
+    enableWheelScroll();
+  }
+})();
+</script>
+
+    <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>
